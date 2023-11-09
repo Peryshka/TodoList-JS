@@ -6,6 +6,7 @@ const todoList = document.querySelector('.list');
 const clearAll = document.getElementsByClassName('clear-all')[0];
 let editElem;
 let editFlag;
+let taskCount = 0;
 //Event Listeners
 form.addEventListener('submit', addListItem);
 clearAll.addEventListener('click', clearAllList);
@@ -30,11 +31,15 @@ function addListItem(e) {
     editElem.textContent = listValue;
     defaultSettings();
   }else if(!listValue){
-    let error = document.createElement('span');
-    error.textContent='Please enter task for TODO List!';
-    formWrap.prepend(error.textContent);
+   alert('Please enter task for TODO list!');
   }
-}
+  taskCount++;
+  const addBtn = document.getElementsByName('addBtn')[0];
+  console.log(addBtn);
+  if(taskCount >= 10) {
+    addBtn.style.display = 'none';
+  }
+};
 
 //function for getting current time
 function currentTime() {
@@ -107,7 +112,6 @@ function clearAllList(e) {
     item.remove();
   })
 };
-
 
 
 
