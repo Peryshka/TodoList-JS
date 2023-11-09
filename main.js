@@ -11,6 +11,13 @@ form.addEventListener('submit', addListItem);
 clearAll.addEventListener('click', clearAllList);
 
 //Functions
+//function for default settings
+function defaultSettings() {
+  input.value = "";
+  editFlag = false;
+  addList.textContent = 'Add new task';
+}
+
 //Add function
 function addListItem(e) {
   e.preventDefault();
@@ -49,6 +56,10 @@ function createItem(listValue, createdTime) {
             <button class="edit-btn">
               Edit
             </button>
+            <label class="label">
+                        <input type="checkbox" class="done-element">
+                        <i class="checkmark"></i>
+                    </label>
             <i class="delete-icon">
             </i>
           </div>
@@ -58,6 +69,9 @@ function createItem(listValue, createdTime) {
   deleteItem.addEventListener('click' , removeElement);
   const editItem = listItem.querySelector('.edit-btn');
   editItem.addEventListener('click', editElement);
+  const doneElement = listItem.querySelector('.done-element');
+  doneElement.addEventListener('change', chooseDoneElements);
+  doneElement.type = 'checkbox';
 }
 
 //function to delete Item
@@ -65,14 +79,6 @@ function removeElement(e) {
   const element = e.currentTarget.parentElement.parentElement;
   element.remove();
 }
-
-//function to clear all items
-function clearAllList(e) {
-  const elements = document.querySelectorAll('.list-item');
-  elements.forEach(item => {
-    item.remove();
-  })
-};
 
 //function to edit element
 function editElement(e) {
@@ -83,12 +89,27 @@ function editElement(e) {
   editFlag = true;
 }
 
-//function for default settings
-function defaultSettings() {
-  input.value = "";
-  editFlag = false;
-  addList.textContent = 'Add new task';
-}
+//function for done Elements
+function chooseDoneElements(e) {
+  const checkbox = e.target;
+  const elemContent = e.target.parentElement.parentElement.previousElementSibling;
+  if(checkbox.checked) {
+    elemContent.style.textDecoration='line-through';
+  } else {
+    elemContent.style.textDecoration='none';
+  }
+};
+
+//function to clear all items
+function clearAllList(e) {
+  const elements = document.querySelectorAll('.list-item');
+  elements.forEach(item => {
+    item.remove();
+  })
+};
+
+
+
 
 
 
