@@ -109,7 +109,7 @@ ul {
 .list {
 margin-top: 50px;
 }
-.listItem {
+.list-item {
   font-weight: 700;
   height: 50px;
   border: 1px solid #CCCCCC;
@@ -119,14 +119,43 @@ margin-top: 50px;
   display: flex;
   justify-content: space-between;
 }
-.addDeleteIcon {
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: -8px;
+}
+
+.delete-icon {
   display: block;
   background:url('./img/delete-3.png') center center no-repeat;
-  height: 25px;
-  width: 25px;
+  height: 28px;
+  width: 60px;
   margin-right: 40px;
+
 }
-.error {
-  color: red;
+.edit-btn {
+  width: 60px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid lightseagreen;
+  background: lightseagreen;
+  color: white;
+
 }
+.clear-btn-wrap {
+  text-align: right;
+  margin-top: 80px;
+}
+ .clear-all {
+  width: 150px;
+  height: 50px;
+  border-radius: 8px;
+  border: 1px solid lightseagreen;
+  background: lightseagreen;
+  color: white;
+}
+
+ .errorStyle {
+   color: red;
+ }
 /* The end of TODO List*/
