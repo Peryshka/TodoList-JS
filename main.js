@@ -16,7 +16,7 @@ clearAll.addEventListener('click', clearAllList);
 function defaultSettings() {
   input.value = "";
   editFlag = false;
-  addList.textContent = 'Add new task';
+  addlist.textContent = 'Add new task';
 }
 
 //Add function
