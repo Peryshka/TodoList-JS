@@ -7,9 +7,18 @@ const clearAll = document.getElementsByClassName('clear-all')[0];
 let editElem;
 let editFlag;
 let taskCount = 0;
+let taskArr = [];
 //Event Listeners
 form.addEventListener('submit', addListItem);
-clearAll.addEventListener('click', clearAllList);
+clearAll.addEventListener('click', clearAllList)
+window.addEventListener('DOMContentLoaded', function(e) {
+ let getListFromStorage = localStorage.getItem('todolist');
+  taskArr = getListFromStorage ? JSON.parse(getListFromStorage) : [];
+  taskArr.forEach(item => {
+    createItem(item.listValue, item.createdTime);
+  });
+});
+// todoList.append(taskArr);
 
 //Functions
 //function for default settings
@@ -22,24 +31,26 @@ function defaultSettings() {
 //Add function
 function addListItem(e) {
   e.preventDefault();
+  let id = Date.now();
   const listValue = input.value.trim();
   const createdTime = currentTime();
-  if(listValue && !editFlag){
+  if (listValue && !editFlag) {
     createItem(listValue, createdTime)
-     defaultSettings()
-  } else if(listValue && editFlag) {
+    defaultSettings()
+  } else if (listValue && editFlag) {
     editElem.textContent = listValue;
     defaultSettings();
-  }else if(!listValue){
-   alert('Please enter task for TODO list!');
+  } else if (!listValue) {
+    alert('Please enter task for TODO list!');
   }
-  taskCount++;
-  const addBtn = document.getElementsByName('addBtn')[0];
-  console.log(addBtn);
-  if(taskCount >= 10) {
-    addBtn.style.display = 'none';
+  const currentTaskItem = {
+    id: id,
+    listValue : listValue,
+    createdTime : createdTime
   }
-};
+  taskArr.push(currentTaskItem);
+  localStorage.setItem('todolist' , JSON.stringify(taskArr));
+}
 
 //function for getting current time
 function currentTime() {
@@ -82,6 +93,7 @@ function createItem(listValue, createdTime) {
 //function to delete Item
 function removeElement(e) {
   const element = e.currentTarget.parentElement.parentElement;
+
   element.remove();
 }
 
