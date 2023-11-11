@@ -1,13 +1,12 @@
 const form = document.forms['form'];
 const input = form['input'];
 const addlist =  form['addBtn'];
-const formWrap = document.getElementsByClassName('custom-input')[0];
 const todoList = document.querySelector('.list');
 const clearAll = document.getElementsByClassName('clear-all')[0];
 let editElem;
 let editFlag;
-let taskCount = 0;
 let taskArr = [];
+let id = Date.now();
 //Event Listeners
 form.addEventListener('submit', addListItem);
 clearAll.addEventListener('click', clearAllList)
@@ -18,7 +17,6 @@ window.addEventListener('DOMContentLoaded', function(e) {
     createItem(item.listValue, item.createdTime);
   });
 });
-// todoList.append(taskArr);
 
 //Functions
 //function for default settings
@@ -31,7 +29,6 @@ function defaultSettings() {
 //Add function
 function addListItem(e) {
   e.preventDefault();
-  let id = Date.now();
   const listValue = input.value.trim();
   const createdTime = currentTime();
   if (listValue && !editFlag) {
@@ -91,11 +88,25 @@ function createItem(listValue, createdTime) {
 }
 
 //function to delete Item
-function removeElement(e) {
+function removeElement(e,id) {
   const element = e.currentTarget.parentElement.parentElement;
-
+  // const updatedTodolist = taskArr.filter(item => item.id !== id);
+  // taskArr(todoList, updatedTodolist);
+  // localStorage.setItem('todolist', JSON.stringify(todoList));
   element.remove();
 }
+
+/*
+const removeTodoFromStorage = (id) =>
+  localStorage.setItem(
+    'todoList',
+    JSON.stringify(
+      JSON
+        .parse(localStorage.getItem('todoList') ?? '[]')
+        .filter((item) => item.id !== id),
+    )
+  );
+ */
 
 //function to edit element
 function editElement(e) {
