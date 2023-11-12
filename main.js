@@ -6,19 +6,21 @@ const clearAll = document.getElementsByClassName('clear-all')[0];
 let editElem;
 let editFlag;
 let taskArr = [];
-let id = Date.now();
 //Event Listeners
 form.addEventListener('submit', addListItem);
 clearAll.addEventListener('click', clearAllList)
-window.addEventListener('DOMContentLoaded', function(e) {
- let getListFromStorage = localStorage.getItem('todolist');
-  taskArr = getListFromStorage ? JSON.parse(getListFromStorage) : [];
-  taskArr.forEach(item => {
-    createItem(item.listValue, item.createdTime);
-  });
-});
+ document.addEventListener('DOMContentLoaded', initList);
 
 //Functions
+
+//function for init list
+function initList() {
+  const taskArr = getLocalStorage()
+  taskArr.forEach(item => {
+   createItem(item.id, item.listValue, item.createdTime)
+  });
+};
+
 //function for default settings
 function defaultSettings() {
   input.value = "";
@@ -31,22 +33,32 @@ function addListItem(e) {
   e.preventDefault();
   const listValue = input.value.trim();
   const createdTime = currentTime();
+  const id = new Date().getTime().toString();
   if (listValue && !editFlag) {
-    createItem(listValue, createdTime)
+    createItem(id, listValue, createdTime)
     defaultSettings()
+    const currentTaskItem = {
+      id: id,
+      listValue: listValue,
+      createdTime: createdTime
+    }
+    const getListFromStorage = localStorage.getItem('todolist');
+    const taskArr = getLocalStorage()
+    taskArr.push(currentTaskItem);
+    localStorage.setItem('todolist' , JSON.stringify(taskArr));
   } else if (listValue && editFlag) {
     editElem.textContent = listValue;
     defaultSettings();
   } else if (!listValue) {
     alert('Please enter task for TODO list!');
   }
-  const currentTaskItem = {
-    id: id,
-    listValue : listValue,
-    createdTime : createdTime
-  }
-  taskArr.push(currentTaskItem);
-  localStorage.setItem('todolist' , JSON.stringify(taskArr));
+}
+//function to get values from localStorage
+function getLocalStorage() {
+  return localStorage.getItem('todolist')
+  ? JSON.parse(localStorage.getItem('todolist'))
+    : [];
+
 }
 
 //function for getting current time
@@ -58,8 +70,9 @@ function currentTime() {
 }
 
 //function to create Item
-function createItem(listValue, createdTime) {
+function createItem(id, listValue, createdTime) {
   const listItem = document.createElement('li');
+  listItem.setAttribute('data-id' , id);
   listItem.classList.add('list-item');
   listItem.innerHTML = `
     <span>
@@ -88,25 +101,13 @@ function createItem(listValue, createdTime) {
 }
 
 //function to delete Item
-function removeElement(e,id) {
+function removeElement(e, id) {
   const element = e.currentTarget.parentElement.parentElement;
-  // const updatedTodolist = taskArr.filter(item => item.id !== id);
-  // taskArr(todoList, updatedTodolist);
-  // localStorage.setItem('todolist', JSON.stringify(todoList));
+  const items = getLocalStorage();
+  const updatedList = items.filter(item => item.id !== element.dataset.id);
+  localStorage.setItem('todolist', JSON.stringify(updatedList));
   element.remove();
 }
-
-/*
-const removeTodoFromStorage = (id) =>
-  localStorage.setItem(
-    'todoList',
-    JSON.stringify(
-      JSON
-        .parse(localStorage.getItem('todoList') ?? '[]')
-        .filter((item) => item.id !== id),
-    )
-  );
- */
 
 //function to edit element
 function editElement(e) {
