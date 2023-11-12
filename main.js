@@ -1,6 +1,6 @@
 const form = document.forms['form'];
 const input = form['input'];
-const addlist =  form['addBtn'];
+const addlist = form['addBtn'];
 const todoList = document.querySelector('.list');
 const clearAll = document.getElementsByClassName('clear-all')[0];
 let editElem;
@@ -9,7 +9,7 @@ let taskArr = [];
 //Event Listeners
 form.addEventListener('submit', addListItem);
 clearAll.addEventListener('click', clearAllList)
- document.addEventListener('DOMContentLoaded', initList);
+document.addEventListener('DOMContentLoaded', initList);
 
 //Functions
 
@@ -17,7 +17,7 @@ clearAll.addEventListener('click', clearAllList)
 function initList() {
   const taskArr = getLocalStorage()
   taskArr.forEach(item => {
-   createItem(item.id, item.listValue, item.createdTime)
+    createItem(item.id, item.listValue, item.createdTime)
   });
 };
 
@@ -45,7 +45,7 @@ function addListItem(e) {
     const getListFromStorage = localStorage.getItem('todolist');
     const taskArr = getLocalStorage()
     taskArr.push(currentTaskItem);
-    localStorage.setItem('todolist' , JSON.stringify(taskArr));
+    localStorage.setItem('todolist', JSON.stringify(taskArr));
   } else if (listValue && editFlag) {
     editElem.textContent = listValue;
     defaultSettings();
@@ -53,10 +53,11 @@ function addListItem(e) {
     alert('Please enter task for TODO list!');
   }
 }
+
 //function to get values from localStorage
 function getLocalStorage() {
   return localStorage.getItem('todolist')
-  ? JSON.parse(localStorage.getItem('todolist'))
+    ? JSON.parse(localStorage.getItem('todolist'))
     : [];
 
 }
@@ -72,7 +73,7 @@ function currentTime() {
 //function to create Item
 function createItem(id, listValue, createdTime) {
   const listItem = document.createElement('li');
-  listItem.setAttribute('data-id' , id);
+  listItem.setAttribute('data-id', id);
   listItem.classList.add('list-item');
   listItem.innerHTML = `
     <span>
@@ -92,7 +93,7 @@ function createItem(id, listValue, createdTime) {
   `;
   todoList.append(listItem)
   const deleteItem = listItem.querySelector('.delete-icon');
-  deleteItem.addEventListener('click' , removeElement);
+  deleteItem.addEventListener('click', removeElement);
   const editItem = listItem.querySelector('.edit-btn');
   editItem.addEventListener('click', editElement);
   const doneElement = listItem.querySelector('.done-element');
@@ -122,10 +123,10 @@ function editElement(e) {
 function chooseDoneElements(e) {
   const checkbox = e.target;
   const elemContent = e.target.parentElement.parentElement.previousElementSibling;
-  if(checkbox.checked) {
-    elemContent.style.textDecoration='line-through';
+  if (checkbox.checked) {
+    elemContent.style.textDecoration = 'line-through';
   } else {
-    elemContent.style.textDecoration='none';
+    elemContent.style.textDecoration = 'none';
   }
 };
 
