@@ -4,34 +4,51 @@
   margin: 0;
   padding: 0;
 }
- body {
-   font-family: 'Noto Sans', sans-serif;
-   font-weight: 400;
-   font-size: 18px;
-   line-height: 24px;
-   color: black;
- }
 
- input {
-   outline: none;
- }
+body {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: black;
+}
+
+input {
+  outline: none;
+}
 
 ul {
-   list-style-type: none;
- }
+  list-style-type: none;
+}
 
 /* End of Reset Styles */
 .container {
   margin: 0 auto;
   width: 1000px;
   padding: 96px 98px 514px;
-}
-.todo_add_block {
   text-align: center;
 }
 
- .title {
-   display: block;
+.error {
+  color: red;
+  font-weight: 700;
+  padding-bottom: 30px;
+}
+
+.alertStyle {
+  color: lightseagreen;
+  font-weight: 700;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.todo_add_block {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.title {
+  display: block;
   font-size: 25px;
   line-height: 18px;
   color: black;
@@ -48,15 +65,18 @@ ul {
   border: 1px solid #666666;
   border-radius: 10px;
 }
+
 .input-wrap {
   display: flex;
 }
+
 .input-wrap .book-icon {
   display: block;
   height: 56px;
   width: 56px;
   background: url('./img/book.png') center center no-repeat;
 }
+
 .input-wrap .label-elem {
   width: 100%;
   height: 56px;
@@ -68,6 +88,7 @@ ul {
   position: relative;
   text-align: left;
 }
+
 .input-wrap .label-elem:hover {
   border: 2px solid #7A5CFA;
 }
@@ -82,11 +103,11 @@ ul {
 
 .input-wrap .label-elem #input-text::placeholder {
   line-height: 24px;
-  color:  #666666;
-  transition: all 200ms ease-in-out ;
+  color: #666666;
+  transition: all 200ms ease-in-out;
 }
 
-.custom-input button{
+.custom-input button {
   height: 56px;
   border-radius: 8px;
   padding: 16px;
@@ -98,17 +119,21 @@ ul {
   color: white;
   margin-top: 20px;
 }
+
 /* End of Custom Input */
 /* TODO List*/
 .todoList-block {
   text-align: left;
 }
+
 .todoList {
   margin-top: 50px;
 }
+
 .list {
-margin-top: 50px;
+  margin-top: 50px;
 }
+
 .list-item {
   font-weight: 700;
   height: 50px;
@@ -119,6 +144,7 @@ margin-top: 50px;
   display: flex;
   justify-content: space-between;
 }
+
 .btn-container {
   display: flex;
   justify-content: space-evenly;
@@ -127,12 +153,13 @@ margin-top: 50px;
 
 .delete-icon {
   display: block;
-  background:url('./img/delete-3.png') center center no-repeat;
+  background: url('./img/delete-3.png') center center no-repeat;
   height: 28px;
   width: 60px;
   margin-right: 40px;
 
 }
+
 .edit-btn {
   width: 60px;
   height: 30px;
@@ -145,13 +172,14 @@ margin-top: 50px;
 .label {
   display: flex;
   align-items: center;
-   margin: 15px 0px 0px 15px;
+  margin: 15px 0px 0px 15px;
 }
+
 .done-element {
   display: none;
 }
 
-.done-element:checked{
+.done-element:checked {
   display: none;
 }
 
@@ -168,13 +196,12 @@ margin-top: 50px;
   background: #FFFFFF url('./img/checkmark.png') center center/contain no-repeat;
 }
 
-
-
 .clear-btn-wrap {
   text-align: right;
   margin-top: 80px;
 }
- .clear-all {
+
+.clear-all {
   width: 150px;
   height: 50px;
   border-radius: 8px;
@@ -183,7 +210,4 @@ margin-top: 50px;
   color: white;
 }
 
- .errorStyle {
-   color: red;
- }
 /* The end of TODO List*/

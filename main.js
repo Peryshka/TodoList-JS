@@ -5,7 +5,7 @@ const todoList = document.querySelector('.list');
 const clearAll = document.getElementsByClassName('clear-all')[0];
 let editElem;
 let editFlag;
-let taskArr = [];
+let editId;
 //Event Listeners
 form.addEventListener('submit', addListItem);
 clearAll.addEventListener('click', clearAllList)
@@ -28,6 +28,28 @@ function defaultSettings() {
   addlist.textContent = 'Add new task';
 }
 
+function displayAlert(alert) {
+  p = document.createElement('p');
+  p.textContent = alert;
+  p.classList.add('alertStyle');
+  const div = document.querySelector('.container');
+  div.prepend(p);
+  setTimeout(() => {
+    div.removeChild(p);
+  }, 1000)
+}
+
+function showError(error) {
+  const errorWrap = document.createElement('span');
+  errorWrap.classList.add('error');
+  errorWrap.textContent = error;
+  const container = document.querySelector('.container');
+  container.prepend(errorWrap);
+  setTimeout(() => {
+    container.removeChild(errorWrap);
+  }, 2000);
+}
+
 //Add function
 function addListItem(e) {
   e.preventDefault();
@@ -36,21 +58,23 @@ function addListItem(e) {
   const id = new Date().getTime().toString();
   if (listValue && !editFlag) {
     createItem(id, listValue, createdTime)
+    displayAlert("Item has been added to the list!");
     defaultSettings()
     const currentTaskItem = {
       id: id,
       listValue: listValue,
       createdTime: createdTime
     }
-    const getListFromStorage = localStorage.getItem('todolist');
     const taskArr = getLocalStorage()
     taskArr.push(currentTaskItem);
     localStorage.setItem('todolist', JSON.stringify(taskArr));
   } else if (listValue && editFlag) {
     editElem.textContent = listValue;
+    displayAlert("Item has been edited in the list!");
+    editLocalStorage(editId, listValue);
     defaultSettings();
   } else if (!listValue) {
-    alert('Please enter task for TODO list!');
+    showError("Please enter task for todolist!");
   }
 }
 
@@ -108,15 +132,30 @@ function removeElement(e, id) {
   const updatedList = items.filter(item => item.id !== element.dataset.id);
   localStorage.setItem('todolist', JSON.stringify(updatedList));
   element.remove();
+  displayAlert("Item has been removed from the list!");
 }
 
 //function to edit element
-function editElement(e) {
+function editElement(e, value, id) {
   let element = e.currentTarget.parentElement.previousElementSibling.querySelector('span');
   editElem = element;
+  console.log(editElem);
+  console.log(element);
   input.value = editElem.textContent;
   addlist.textContent = 'Edit';
   editFlag = true;
+  editId = element.dataset.id;
+}
+
+function editLocalStorage(id, value) {
+  const elements = getLocalStorage();
+  const updatedList = elements.map(item => {
+    if (item.id === id) {
+      item.value = value;
+    }
+    return item;
+  })
+  localStorage.setItem('list', JSON.stringify(updatedList));
 }
 
 //function for done Elements
@@ -125,8 +164,10 @@ function chooseDoneElements(e) {
   const elemContent = e.target.parentElement.parentElement.previousElementSibling;
   if (checkbox.checked) {
     elemContent.style.textDecoration = 'line-through';
+    displayAlert("Item has been done!");
   } else {
     elemContent.style.textDecoration = 'none';
+    displayAlert("Item hasn't been done yet!");
   }
 };
 
@@ -136,6 +177,7 @@ function clearAllList(e) {
   elements.forEach(item => {
     item.remove();
   })
+  displayAlert("All list has been cleared!");
 };
 
 
