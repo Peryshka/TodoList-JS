@@ -40,6 +40,7 @@ function displayAlert(alert) {
   }, 1000)
 }
 
+//function to show error
 function showError(error) {
   const errorWrap = document.createElement('span');
   errorWrap.classList.add('error');
