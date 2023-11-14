@@ -71,7 +71,8 @@ function addListItem(e) {
   } else if (listValue && editFlag) {
     editElem.textContent = listValue;
     displayAlert("Item has been edited in the list!");
-    editLocalStorage(editId, listValue);
+    const currentId = editElem.parentElement.parentElement.getAttribute('dataId')
+    editLocalStorage(currentId, listValue);
     defaultSettings();
   } else if (!listValue) {
     showError("Please enter task for todolist!");
@@ -97,11 +98,11 @@ function currentTime() {
 //function to create Item
 function createItem(id, listValue, createdTime) {
   const listItem = document.createElement('li');
-  listItem.setAttribute('data-id', id);
+  listItem.setAttribute('dataId', id);
   listItem.classList.add('list-item');
   listItem.innerHTML = `
     <span>
-     <span>${listValue}</span>
+     <span class="todoName">${listValue}</span>
      - ${createdTime}</span>
           <div class="btn-container">
             <button class="edit-btn">
@@ -136,27 +137,34 @@ function removeElement(e, id) {
 }
 
 //function to edit element
-function editElement(e, value, id) {
-  let element = e.currentTarget.parentElement.previousElementSibling.querySelector('span');
+function editElement(e, id) {
+  const element = document.querySelector('.todoName');
+
   editElem = element;
-  console.log(editElem);
-  console.log(element);
   input.value = editElem.textContent;
   addlist.textContent = 'Edit';
   editFlag = true;
   editId = element.dataset.id;
 }
 
-function editLocalStorage(id, value) {
+function editLocalStorage(id, listValue) {
+  console.log(id, listValue)
+  const liElem = editElem.parentElement.parentElement.dataset.id;
+  console.log(liElem)
   const elements = getLocalStorage();
+  console.log(elements)
   const updatedList = elements.map(item => {
-    if (item.id === id) {
-      item.value = value;
+    if (id === item.id) {
+      item.listValue = editElem.textContent;
     }
-    return item;
+    return item
   })
-  localStorage.setItem('list', JSON.stringify(updatedList));
+  localStorage.setItem('todolist', JSON.stringify(updatedList));
 }
+
+// function editLocalStorage(id, listValue) {
+//
+// }
 
 //function for done Elements
 function chooseDoneElements(e) {
