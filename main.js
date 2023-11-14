@@ -28,6 +28,7 @@ function defaultSettings() {
   addlist.textContent = 'Add new task';
 }
 
+//function to show alert
 function displayAlert(alert) {
   p = document.createElement('p');
   p.textContent = alert;
@@ -147,6 +148,7 @@ function editElement(e, id) {
   editId = element.dataset.id;
 }
 
+//function editLocalstorage
 function editLocalStorage(id, listValue) {
   console.log(id, listValue)
   const liElem = editElem.parentElement.parentElement.dataset.id;
