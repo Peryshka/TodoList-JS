@@ -162,10 +162,6 @@ function editLocalStorage(id, listValue) {
   localStorage.setItem('todolist', JSON.stringify(updatedList));
 }
 
-// function editLocalStorage(id, listValue) {
-//
-// }
-
 //function for done Elements
 function chooseDoneElements(e) {
   const checkbox = e.target;
